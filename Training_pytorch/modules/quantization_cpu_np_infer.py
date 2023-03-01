@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from utee import wage_initializer,wage_quantizer
-from torch._jit_internal import weak_script_method
+from modules._jit_internal_1 import weak_script_method
 import numpy as np
 
 class QConv2d(nn.Conv2d):
