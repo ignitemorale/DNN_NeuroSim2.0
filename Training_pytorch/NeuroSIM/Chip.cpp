@@ -733,10 +733,13 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 									&tileLatencyADC, &tileLatencyAccum, &tileLatencyOther, &tileEnergyADC, &tileEnergyAccum, &tileEnergyOther, 
 									&tileReadLatencyPeakFW, &tileReadDynamicEnergyPeakFW, &tileReadLatencyPeakAG, &tileReadDynamicEnergyPeakAG,
 									&tileWriteLatencyPeakWU, &tileWriteDynamicEnergyPeakWU);
-				
+				cout << "cut41" << endl;
 				*readLatency = MAX(tileReadLatency, (*readLatency));
+				cout << "cut42" << endl;
 				*readDynamicEnergy += tileReadDynamicEnergy;
+				cout << "cut43" << endl;
 				*readLatencyPeakFW = MAX(tileReadLatencyPeakFW, (*readLatencyPeakFW));
+				cout << "cut44" << endl;
 				*readDynamicEnergyPeakFW += tileReadDynamicEnergyPeakFW;
 				cout << "cut5" << endl;
 				if (param->trainingEstimation) {
