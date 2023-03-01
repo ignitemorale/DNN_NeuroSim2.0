@@ -323,17 +323,17 @@ int main(int argc, char * argv[]) {
 	} else {
 		cout << "Error: the breakdown file cannot be opened!" << endl;
 	}
-	cout << "cut1"
+	cout << "cut1";
 	if (! param->pipeline) {
 		// layer-by-layer process
 		// show the detailed hardware performance for each layer
 		for (int i=0; i<netStructure.size(); i++) {
 			cout << "-------------------- Estimation of Layer " << i+1 << " ----------------------" << endl;
-			cout << "cut2"
+			cout << "cut2";
 			param->activityRowReadWG = atof(argv[4*i+8]);
                         param->activityRowWriteWG = atof(argv[4*i+8]);
                         param->activityColWriteWG = atof(argv[4*i+8]);
-			cout << "cut3"
+			cout << "cut3";
 			ChipCalculatePerformance(inputParameter, tech, cell, i, argv[4*i+5], argv[4*i+6], argv[4*i+7], netStructure[i][6],
 						netStructure, markNM, numTileEachLayer, utilizationEachLayer, speedUpEachLayer, tileLocaEachLayer,
 						numPENM, desiredPESizeNM, desiredTileSizeCM, desiredPESizeCM, CMTileheight, CMTilewidth, NMTileheight, NMTilewidth, numArrayWriteParallel,
@@ -342,16 +342,16 @@ int main(int argc, char * argv[]) {
 						&coreLatencyADC, &coreLatencyAccum, &coreLatencyOther, &coreEnergyADC, &coreEnergyAccum, &coreEnergyOther, &layerDRAMLatency, &layerDRAMDynamicEnergy,
 						&layerReadLatencyPeakFW, &layerReadDynamicEnergyPeakFW, &layerReadLatencyPeakAG, &layerReadDynamicEnergyPeakAG,
 						&layerReadLatencyPeakWG, &layerReadDynamicEnergyPeakWG, &layerWriteLatencyPeakWU, &layerWriteDynamicEnergyPeakWU);
-			cout << "cut4"
+			cout << "cut4";
 			double numTileOtherLayer = 0;
 			double layerLeakageEnergy = 0;	
-			cout << "cut5"
+			cout << "cut5";
 			for (int j=0; j<netStructure.size(); j++) {
 				if (j != i) {
 					numTileOtherLayer += numTileEachLayer[0][j] * numTileEachLayer[1][j];
 				}
 			}
-			cout << "cut6"
+			cout << "cut6";
 			layerLeakageEnergy = numTileOtherLayer*tileLeakage*(layerReadLatency+layerReadLatencyAG);
 			
 			cout << "layer" << i+1 << "'s readLatency of Forward is: " << layerReadLatency*1e9 << "ns" << endl;
