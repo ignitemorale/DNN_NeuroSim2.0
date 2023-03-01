@@ -323,13 +323,13 @@ int main(int argc, char * argv[]) {
 	} else {
 		cout << "Error: the breakdown file cannot be opened!" << endl;
 	}
-	cout << "cut1";
+	cout << "cut1" << end1;
 	if (! param->pipeline) {
 		// layer-by-layer process
 		// show the detailed hardware performance for each layer
 		for (int i=0; i<netStructure.size(); i++) {
-			cout << "-------------------- Estimation of Layer " << i+1 << " ----------------------";
-			cout << "cut2";
+			cout << "-------------------- Estimation of Layer " << i+1 << " ----------------------" << end1;
+			cout << "cut2" << end1;
 			param->activityRowReadWG = atof(argv[4*i+8]);
                         param->activityRowWriteWG = atof(argv[4*i+8]);
                         param->activityColWriteWG = atof(argv[4*i+8]);
