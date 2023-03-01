@@ -328,12 +328,12 @@ int main(int argc, char * argv[]) {
 		// layer-by-layer process
 		// show the detailed hardware performance for each layer
 		for (int i=0; i<netStructure.size(); i++) {
-			cout << "-------------------- Estimation of Layer " << i+1 << " ----------------------";
-			cout << "cut2";
+			cout << "-------------------- Estimation of Layer " << i+1 << " ----------------------" << endl;
+			cout << "cut2" << endl;
 			param->activityRowReadWG = atof(argv[4*i+8]);
                         param->activityRowWriteWG = atof(argv[4*i+8]);
                         param->activityColWriteWG = atof(argv[4*i+8]);
-			cout << "cut3";
+			cout << "cut3" << endl;
 			ChipCalculatePerformance(inputParameter, tech, cell, i, argv[4*i+5], argv[4*i+6], argv[4*i+7], netStructure[i][6],
 						netStructure, markNM, numTileEachLayer, utilizationEachLayer, speedUpEachLayer, tileLocaEachLayer,
 						numPENM, desiredPESizeNM, desiredTileSizeCM, desiredPESizeCM, CMTileheight, CMTilewidth, NMTileheight, NMTilewidth, numArrayWriteParallel,
