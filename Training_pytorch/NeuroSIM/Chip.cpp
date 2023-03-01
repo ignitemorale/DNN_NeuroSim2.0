@@ -642,12 +642,14 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 	numRowPerSynapse = param->numRowPerSynapse;
 	numColPerSynapse = param->numColPerSynapse;
 	
+	cout << "cut1" << endl;
 	// only get performance of single layer
 	int l = layerNumber;
 	// get weight matrix file Size
 	int weightMatrixRow = netStructure[l][2]*netStructure[l][3]*netStructure[l][4]*numRowPerSynapse;
 	int weightMatrixCol = netStructure[l][5]*numColPerSynapse;
 	
+	cout << "cut2" << endl;
 	// load in whole file 
 	vector<vector<double> > inputVector;
 	inputVector = LoadInInputData(inputfile); 
@@ -690,18 +692,21 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 	*dramLatency = 0;
 	*dramDynamicEnergy = 0;
 	
+	cout << "cut3" << endl;
 	double tileLeakage = 0;
 	double tileReadLatency,tileReadDynamicEnergy,tileReadLatencyAG,tileReadDynamicEnergyAG,tileWriteLatencyWU,tileWriteDynamicEnergyWU;
 	double tileReadLatencyPeakFW,tileReadDynamicEnergyPeakFW,tileReadLatencyPeakAG,tileReadDynamicEnergyPeakAG;
 	double tileWriteLatencyPeakWU,tileWriteDynamicEnergyPeakWU,tilebufferLatency,tilebufferDynamicEnergy,tileicLatency,tileicDynamicEnergy;
 	double tileLatencyADC,tileLatencyAccum,tileLatencyOther,tileEnergyADC,tileEnergyAccum,tileEnergyOther;
 	
+	cout << "cut4" << endl;
 	int numInVector = (netStructure[l][0]-netStructure[l][3]+1)/netStructure[l][7]*(netStructure[l][1]-netStructure[l][4]+1)/netStructure[l][7];
 	int totalNumTile = 0;
 	for (int i=0; i<netStructure.size(); i++) {
 		totalNumTile += numTileEachLayer[0][i] * numTileEachLayer[1][i];
 	}
 	
+	cout << "cut5" << endl;
 	if (markNM[l] == 0) {   // conventional mapping
 		for (int i=0; i<ceil((double) netStructure[l][2]*(double) netStructure[l][3]*(double) netStructure[l][4]*(double) numRowPerSynapse/desiredTileSizeCM); i++) {       // # of tiles in row
 			for (int j=0; j<ceil((double) netStructure[l][5]*(double) numColPerSynapse/(double) desiredTileSizeCM); j++) {   // # of tiles in Column
@@ -758,6 +763,7 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 				*coreEnergyOther += tileEnergyOther;
 			}
 		}
+		cout << "cut6" << endl;
 		if (param->chipActivation) {
 			if (param->reLu) {
 				GreLu->CalculateLatency(ceil(numInVector*netStructure[l][5]/(double) GreLu->numUnit));
@@ -780,6 +786,7 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 			}
 		}
 		
+		cout << "cut7" << endl;
 		if (numTileEachLayer[0][l] > 1) {   
 			Gaccumulation->CalculateLatency(numTileEachLayer[1][l]*netStructure[l][5]*(ceil(numInVector/(double) Gaccumulation->numAdderTree)), numTileEachLayer[0][l], 0);
 			Gaccumulation->CalculatePower(numTileEachLayer[1][l]*netStructure[l][5]*(ceil(numInVector/(double) Gaccumulation->numAdderTree)), numTileEachLayer[0][l]);
@@ -797,6 +804,7 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 			*coreEnergyAccum += Gaccumulation->readDynamicEnergy*((param->trainingEstimation)&&(layerNumber!=0)==true? 2:1);
 		}
 		
+		cout << "cut8" << endl;
 		// if this layer is followed by Max Pool
 		if (followedByMaxPool) {
 			maxPool->CalculateLatency(1e20, 0, ceil((double) (numInVector/(double) maxPool->window)/(double) desiredTileSizeCM));
@@ -891,6 +899,7 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 			}
 		}
 		
+		cout << "cut9" << endl;
 		if (param->chipActivation) {
 			if (param->reLu) {
 				GreLu->CalculateLatency(ceil(numInVector*netStructure[l][5]/(double) GreLu->numUnit));
@@ -913,6 +922,7 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 			}
 		}
 		
+		cout << "cut10" << endl;
 		if (numTileEachLayer[0][l] > 1) {   
 			Gaccumulation->CalculateLatency(numTileEachLayer[1][l]*netStructure[l][5]*(ceil(numInVector/(double) Gaccumulation->numAdderTree)), numTileEachLayer[0][l], 0);
 			Gaccumulation->CalculatePower(numTileEachLayer[1][l]*netStructure[l][5]*(ceil(numInVector/(double) Gaccumulation->numAdderTree)), numTileEachLayer[0][l]);
@@ -930,6 +940,7 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 			*coreEnergyAccum += Gaccumulation->readDynamicEnergy*((param->trainingEstimation)&&(layerNumber!=0)==true? 2:1);
 		}
 		
+		cout << "cut11" << endl;
 		// if this layer is followed by Max Pool
 		if (followedByMaxPool) {
 			maxPool->CalculateLatency(1e20, 0, ceil((double) (numInVector/(double) maxPool->window)/(double) desiredPESizeNM*sqrt((double) numPENM)));
