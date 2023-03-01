@@ -323,7 +323,7 @@ int main(int argc, char * argv[]) {
 	} else {
 		cout << "Error: the breakdown file cannot be opened!" << endl;
 	}
-	cout << "cut1";
+	cout << "cut1" << endl;
 	if (! param->pipeline) {
 		// layer-by-layer process
 		// show the detailed hardware performance for each layer
