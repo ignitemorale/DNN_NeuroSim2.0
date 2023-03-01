@@ -708,11 +708,14 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 	
 	cout << "cut5" << endl;
 	if (markNM[l] == 0) {   // conventional mapping
+		cout << "cut1" << endl;
 		for (int i=0; i<ceil((double) netStructure[l][2]*(double) netStructure[l][3]*(double) netStructure[l][4]*(double) numRowPerSynapse/desiredTileSizeCM); i++) {       // # of tiles in row
+			cout << "cut2" << endl;
 			for (int j=0; j<ceil((double) netStructure[l][5]*(double) numColPerSynapse/(double) desiredTileSizeCM); j++) {   // # of tiles in Column
 				int numRowMatrix = min(desiredTileSizeCM, weightMatrixRow-i*desiredTileSizeCM);
 				int numColMatrix = min(desiredTileSizeCM, weightMatrixCol-j*desiredTileSizeCM);
 				
+				cout << "cut3" << endl;
 				// assign weight and input to specific tile
 				vector<vector<double> > tileMemoryOld;
 				tileMemoryOld = CopyArray(oldMemory, i*desiredTileSizeCM, j*desiredTileSizeCM, numRowMatrix, numColMatrix);
@@ -722,6 +725,7 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 				vector<vector<double> > tileInput;
 				tileInput = CopyInput(inputVector, i*desiredTileSizeCM, numInVector*param->numBitInput, numRowMatrix);
 				
+				cout << "cut4" << endl;
 				TileCalculatePerformance(tileMemory, tileMemoryOld, tileInput, markNM[l], layerNumber, ceil((double)desiredTileSizeCM/(double)desiredPESizeCM), desiredPESizeCM, speedUpEachLayer[0][l], speedUpEachLayer[1][l],
 									numRowMatrix, numColMatrix, numInVector*param->numBitInput, tech, cell, &tileReadLatency, &tileReadDynamicEnergy, &tileLeakage,
 									&tileReadLatencyAG, &tileReadDynamicEnergyAG, &tileWriteLatencyWU, &tileWriteDynamicEnergyWU,
@@ -734,6 +738,7 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 				*readDynamicEnergy += tileReadDynamicEnergy;
 				*readLatencyPeakFW = MAX(tileReadLatencyPeakFW, (*readLatencyPeakFW));
 				*readDynamicEnergyPeakFW += tileReadDynamicEnergyPeakFW;
+				cout << "cut5" << endl;
 				if (param->trainingEstimation) {
 					*readLatencyAG = MAX(tileReadLatencyAG, (*readLatencyAG));
 					*readDynamicEnergyAG += tileReadDynamicEnergyAG;
@@ -749,6 +754,7 @@ double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech
 					*writeLatencyPeakWU += tileWriteLatencyPeakWU;
 					*writeDynamicEnergyPeakWU += tileWriteDynamicEnergyPeakWU;
 				}
+				cout << "cut6" << endl;
 				*bufferLatency = MAX(tilebufferLatency, (*bufferLatency));
 				*bufferDynamicEnergy += tilebufferDynamicEnergy;
 				*icLatency = MAX(tileicLatency, (*icLatency));
