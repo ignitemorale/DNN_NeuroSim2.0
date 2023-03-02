@@ -445,7 +445,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 			*coreLatencyAccum = (*coreLatencyAccum)/(arrayDupRow*arrayDupCol);
 			*coreLatencyOther = (*coreLatencyOther)/(arrayDupRow*arrayDupCol);
 		} else {
-			cout << "cut428" << endl;
+			cout << "cut42800" << endl;
 			// assign weight and input to specific subArray
 			vector<vector<double> > subArrayMemoryOld;
 			subArrayMemoryOld = CopySubArray(oldMemory, 0, 0, weightMatrixRow, weightMatrixCol);
@@ -453,24 +453,24 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 			subArrayMemory = CopySubArray(newMemory, 0, 0, weightMatrixRow, weightMatrixCol);
 			vector<vector<double> > subArrayInput;
 			subArrayInput = CopySubInput(inputVector, 0, numInVector, weightMatrixRow);
-
+			cout << "cut42801" << endl;
 			subArrayReadLatency = 0;
 			subArrayLatencyADC = 0;
 			subArrayLatencyAccum = 0;
 			subArrayLatencyOther = 0;
 			subArrayReadLatencyAG = 0;
 			subArrayReadDynamicEnergyAG = 0;
-			
+			cout << "cut42802" << endl;
 			if (param->trainingEstimation) {
 				double activityColWrite = 0;
 				double activityRowWrite = 0;
 				int numWritePulseAVG=0;
 				int totalNumWritePulse = 0;
 				double writeDynamicEnergyArray = 0;
-				
+				cout << "cut42803" << endl;
 				GetWriteUpdateEstimation(subArray, tech, cell, subArrayMemory, subArrayMemoryOld, 
 					&activityColWrite, &activityRowWrite, &numWritePulseAVG, &totalNumWritePulse, &writeDynamicEnergyArray);
-				
+				cout << "cut42804" << endl;
 				subArray->activityColWrite = activityColWrite;
 				subArray->activityRowWrite = activityRowWrite;
 				subArray->numWritePulseAVG = numWritePulseAVG;
