@@ -954,7 +954,7 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 		totalNumSetWritePulse += numSetWritePulse;
 		totalNumResetWritePulse += numResetWritePulse;
 	}
-	cout << "cut42807 << endl;
+	cout << "cut4287" << endl;
 	// get average num of selected column for set and reset
 	numSelectedColSet = numSelectedRowSet==0? 0:ceil(numSelectedColSet/numSelectedRowSet);
 	numSelectedColReset = numSelectedRowReset==0? 0:ceil(numSelectedColReset/numSelectedRowReset);
