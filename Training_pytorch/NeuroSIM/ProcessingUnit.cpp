@@ -964,12 +964,11 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 	*activityColWrite = ((numSelectedColSet+numSelectedColReset)/2.0)/newMemory[0].size();
 	*activityRowWrite = ((numSelectedRowSet+numSelectedRowReset)/2.0)/newMemory.size();	
 	
-	
+	cout << "cut42884" << endl;
 	// calculate WL BL and SL energy
 	if (cell.memCellType == Type::RRAM || cell.memCellType == Type::FeFET) {
 		if (cell.accessType == CMOS_access) {
 			if (cell.memCellType == Type::FeFET) {
-				cout << "00" << endl;
 				// SET
 				*writeDynamicEnergyArray += subArray->capRow2 * tech.vdd * tech.vdd * totalNumSetWritePulse;	
 				*writeDynamicEnergyArray += (subArray->capCol + param->gateCapFeFET * numSelectedRowSet) * cell.writeVoltage * cell.writeVoltage * numSelectedColSet * totalNumSetWritePulse;
@@ -977,7 +976,6 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 				*writeDynamicEnergyArray += subArray->capRow2 * tech.vdd * tech.vdd * totalNumResetWritePulse;	
 				*writeDynamicEnergyArray += (subArray->capCol + param->gateCapFeFET * numSelectedRowReset) * cell.writeVoltage * cell.writeVoltage * numSelectedColReset * totalNumResetWritePulse;
 			} else {
-				cout << "b" << endl;
 				// SET
 				*writeDynamicEnergyArray += subArray->capRow2 * tech.vdd * tech.vdd * totalNumSetWritePulse;																                // Selected WL
 				*writeDynamicEnergyArray += subArray->capCol * cell.writeVoltage * cell.writeVoltage * (newMemory[0].size()>=numSelectedColSet? (newMemory[0].size()-numSelectedColSet):(newMemory[0].size())) * totalNumSetWritePulse;	                    // Unselected SLs
@@ -988,7 +986,6 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 				*writeDynamicEnergyArray += subArray->capRow1 * cell.writeVoltage * cell.writeVoltage * (newMemory[0].size()>=numSelectedColReset? (newMemory[0].size()-numSelectedColReset):(newMemory[0].size())) * totalNumResetWritePulse;				// Unselected BL
 			}
 		} else {
-			cout << "c" << endl;
 			// SET
 			*writeDynamicEnergyArray += subArray->capRow1 * cell.writeVoltage * cell.writeVoltage * totalNumSetWritePulse;   																// Selected WL
 			*writeDynamicEnergyArray += subArray->capRow1 * cell.writeVoltage/2 * cell.writeVoltage/2 * (newMemory.size()>=numSelectedRowSet? (newMemory.size()-numSelectedRowSet):(newMemory.size())) * (*numWritePulseAVG);  						// Unselected WLs
@@ -1007,7 +1004,7 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 										* cell.writePulseWidth * (newMemory.size()>=numSelectedRowReset? (newMemory.size()-numSelectedRowReset):(newMemory.size())) * totalNumResetWritePulse;   										                // Half-selected (unselected) cells on the selected columns			
 		}
 	} else {   
-		cout << "cut42884" << endl;
+		
 		// SRAM
 		*writeDynamicEnergyArray = 0; // leave to subarray.cpp 
 	}
