@@ -868,7 +868,7 @@ vector<double> GetRowResistance(const vector<double> &input, const vector<vector
 
 double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& cell, const vector<vector<double> > &newMemory, const vector<vector<double> > &oldMemory, 
 								double *activityColWrite, double *activityRowWrite, int *numWritePulseAVG, int *totalNumWritePulse, double *writeDynamicEnergyArray) {
-									
+	cout << "cut4280" << endl;								
 	int maxNumWritePulse = MAX(cell.maxNumLevelLTP, cell.maxNumLevelLTD);
 	double minDeltaConductance = (double) (param->maxConductance-param->minConductance)/maxNumWritePulse;     // define the min delta weight
 	int totalNumSetWritePulse = 0;
@@ -884,13 +884,14 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 	int numSelectedRowReset = 0;						// used to calculate activityRowWrite
 	int numSelectedColSet = 0;							// used to calculate activityColWrite
 	int numSelectedColReset = 0;						// used to calculate activityColWrite
+	cout << "cut4281" << endl;
 	for (int i=0; i<newMemory.size(); i++) {    		// update weight row-by-row
 		int numSet = 0;          						// num of columns need to be set
 		int numReset = 0;        						// num of columns need to be reset
 		int numSetWritePulse = 0;						// num of set pulse of each row
 		int numResetWritePulse = 0;						// num of reset pulse of each row
 		bool rowSelected = false;
-		
+		cout << "cut4283" << endl;
 		for (int j=0; j<newMemory[0].size(); j++) {   	// sweep column for a row
 			if (param->memcelltype != 1) { // eNVM
 				if (abs(newMemory[i][j]-oldMemory[i][j]) >= minDeltaConductance) {
@@ -915,11 +916,15 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 						double deltaPr = abs(newPr+(param->polarization))+abs(oldPr+(param->polarization));  // uC/cm^2 (assume erase before program)
 						*writeDynamicEnergyArray += deltaPr*0.01*cell.writeVoltage*(2*tech.featureSize*tech.featureSize);
 					}
-				} else { // no update
+				} else {
+					cout << "cut4284" << endl;
+					// no update
 					numSet += 0;
 					numReset += 0;
 				}
-			} else {  // SRAM
+			} else {
+				cout << "cut4285" << endl;
+				// SRAM
 				if (newMemory[i][j] != oldMemory[i][j]) {
 					rowSelected = true;
 					if (newMemory[i][j] > oldMemory[i][j]) {  // LTP
@@ -935,6 +940,7 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 				}
 			}
 		}
+		cout << "cut4286" << endl;
 		if (rowSelected && (numSet>0)) {  			 // if set happens in this row
 			numSelectedRowSet += 1;
 		} else if (rowSelected && (numReset>0)) { 	 // if reset happens in this row
@@ -948,7 +954,7 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 		totalNumSetWritePulse += numSetWritePulse;
 		totalNumResetWritePulse += numResetWritePulse;
 	}
-	
+	cout << "cut42807 << endl;
 	// get average num of selected column for set and reset
 	numSelectedColSet = numSelectedRowSet==0? 0:ceil(numSelectedColSet/numSelectedRowSet);
 	numSelectedColReset = numSelectedRowReset==0? 0:ceil(numSelectedColReset/numSelectedRowReset);
@@ -958,6 +964,7 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 	*activityColWrite = ((numSelectedColSet+numSelectedColReset)/2.0)/newMemory[0].size();
 	*activityRowWrite = ((numSelectedRowSet+numSelectedRowReset)/2.0)/newMemory.size();	
 	
+	cout << "cut4288" << endl;
 	// calculate WL BL and SL energy
 	if (cell.memCellType == Type::RRAM || cell.memCellType == Type::FeFET) {
 		if (cell.accessType == CMOS_access) {
