@@ -19,7 +19,7 @@ from modules.quantization_cpu_np_infer import QConv2d,QLinear
 
 parser = argparse.ArgumentParser(description='PyTorch CIFAR-X Example')
 parser.add_argument('--type', default='cifar10', help='dataset for training')
-parser.add_argument('--batch_size', type=int, default=200, help='input batch size for training (default: 64)')
+parser.add_argument('--batch_size', type=int, default=30, help='input batch size for training (default: 64)')
 parser.add_argument('--epochs', type=int, default=257, help='number of epochs to train (default: 10)')
 parser.add_argument('--grad_scale', type=float, default=1, help='learning rate for wage delta calculation')
 parser.add_argument('--seed', type=int, default=117, help='random seed (default: 1)')
