@@ -872,6 +872,7 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 	*totalNumWritePulse = 0;
 	*writeDynamicEnergyArray = 0;
 	
+	cout << "0";
 	int numSelectedRowSet = 0;							// used to calculate activityRowWrite
 	int numSelectedRowReset = 0;						// used to calculate activityRowWrite
 	int numSelectedColSet = 0;							// used to calculate activityColWrite
