@@ -1011,6 +1011,6 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 		// SRAM
 		*writeDynamicEnergyArray = 0; // leave to subarray.cpp 
 	}
-	break;
+	cout << "cut428800" << endl;
 }
 
