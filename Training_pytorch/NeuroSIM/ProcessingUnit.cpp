@@ -940,18 +940,21 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 		totalNumSetWritePulse += numSetWritePulse;
 		totalNumResetWritePulse += numResetWritePulse;
 	}
-	
+	cout << "a";
 	// get average num of selected column for set and reset
 	numSelectedColSet = numSelectedRowSet==0? 0:ceil(numSelectedColSet/numSelectedRowSet);
 	numSelectedColReset = numSelectedRowReset==0? 0:ceil(numSelectedColReset/numSelectedRowReset);
-		
+	
+	cout << "b";
 	*totalNumWritePulse = totalNumResetWritePulse + totalNumSetWritePulse;
 	*numWritePulseAVG = (*totalNumWritePulse)/(MAX(1, (numSelectedRowSet+numSelectedRowReset)/2.0));
 	*activityColWrite = ((numSelectedColSet+numSelectedColReset)/2.0)/newMemory[0].size();
 	*activityRowWrite = ((numSelectedRowSet+numSelectedRowReset)/2.0)/newMemory.size();	
 	
+	cout << "c";
 	// calculate WL BL and SL energy
 	if (cell.memCellType == Type::RRAM || cell.memCellType == Type::FeFET) {
+		cout << "d";
 		if (cell.accessType == CMOS_access) {
 			if (cell.memCellType == Type::FeFET) {
 				// SET
@@ -988,9 +991,10 @@ double GetWriteUpdateEstimation(SubArray *subArray, Technology& tech, MemCell& c
 			*writeDynamicEnergyArray += cell.writeVoltage/2 * cell.writeVoltage/2 * (1/cell.resMemCellOnAtHalfVw + 1/cell.resMemCellOffAtHalfVw) / 2 
 										* cell.writePulseWidth * (newMemory.size()>=numSelectedRowReset? (newMemory.size()-numSelectedRowReset):(newMemory.size())) * totalNumResetWritePulse;   										                // Half-selected (unselected) cells on the selected columns			
 		}
-	} else {   // SRAM
+	} else {   
+		cout << "e";
+		// SRAM
 		*writeDynamicEnergyArray = 0; // leave to subarray.cpp 
 	}
-	return 0;
 }
 
