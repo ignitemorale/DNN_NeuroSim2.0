@@ -58,7 +58,7 @@ args.d2dVari = 0.0            # device-to-device variation
 args.nonlinearityLTP = 1.75   # nonlinearity in LTP
 args.nonlinearityLTD = 1.46   # nonlinearity in LTD (negative if LTP and LTD are asymmetric)
 
-# momentum
+# momentu
 gamma = 0.9
 alpha = 0.1
 
