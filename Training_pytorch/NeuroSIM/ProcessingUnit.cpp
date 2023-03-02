@@ -288,7 +288,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 											double *coreLatencyADC, double *coreLatencyAccum, double *coreLatencyOther, double *coreEnergyADC, 
 											double *coreEnergyAccum, double *coreEnergyOther, double *readLatencyPeakFW, double *readDynamicEnergyPeakFW,
 											double *readLatencyPeakAG, double *readDynamicEnergyPeakAG, double *writeLatencyPeakWU, double *writeDynamicEnergyPeakWU) {
-	
+	cout << "cut420" << endl;
 	/*** define how many subArray are used to map the whole layer ***/
 	*readLatency = 0;
 	*readDynamicEnergy = 0;
@@ -317,7 +317,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 	
 	double subArrayReadLatency, subArrayReadDynamicEnergy, subArrayLeakage, subArrayLatencyADC, subArrayLatencyAccum, subArrayLatencyOther;
 	double subArrayReadLatencyAG, subArrayReadDynamicEnergyAG, subArrayWriteLatencyWU, subArrayWriteDynamicEnergyWU;
-	
+	cout << "cut421" << endl;
 	if (arrayDupRow*arrayDupCol > 1) {
 		// weight matrix is duplicated among subArray
 		if (arrayDupRow < numSubArrayRow || arrayDupCol < numSubArrayCol) {
@@ -327,6 +327,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 				for (int j=0; j<ceil((double) weightMatrixCol/(double) param->numColSubArray); j++) {
 					int numRowMatrix = min(param->numRowSubArray, weightMatrixRow-i*param->numRowSubArray);
 					int numColMatrix = min(param->numColSubArray, weightMatrixCol-j*param->numColSubArray);
+					cout << "cut422" << endl;
 					// sweep different sub-array
 					if ((i*param->numRowSubArray < weightMatrixRow) && (j*param->numColSubArray < weightMatrixCol) && (i*param->numRowSubArray < weightMatrixRow) ) {
 						// assign weight and input to specific subArray
@@ -344,6 +345,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 						subArrayReadLatencyAG = 0;
 						subArrayReadDynamicEnergyAG = 0;
 						
+						cout << "cut423" << endl;
 						if (param->trainingEstimation) {
 							double activityColWrite = 0;
 							double activityRowWrite = 0;
@@ -361,7 +363,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 							subArray->writeDynamicEnergyArray = writeDynamicEnergyArray;
 							subArray->layerNumber = layerNumber;
 						}
-
+						cout << "cut424" << endl;
 						for (int k=0; k<numInVector; k++) {                 // calculate single subArray through the total input vectors
 							double activityRowRead = 0;
 							vector<double> input; 
@@ -398,6 +400,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 							*coreEnergyAccum += subArray->readDynamicEnergyAccum;
 							*coreEnergyOther += subArray->readDynamicEnergyOther;
 						}
+						cout << "cut425" << endl;
 						// accumulate write latency as array need to be write sequentially (worst case)
 						// limitation by on-chip buffer, write latency will be divided by numArrayWriteParallel (real case)
 						*writeLatencyWU += subArray->writeLatency*((param->trainingEstimation)==true? 1:0);
@@ -416,6 +419,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 							*coreLatencyOther = MAX(subArrayLatencyOther, (*coreLatencyOther));
 							*coreEnergyAccum += adderTreeNM->readDynamicEnergy*((param->trainingEstimation)&&(layerNumber!=0)==true? 2:1);
 						} else {
+							cout << "cut426" << endl;
 							adderTreeCM->CalculateLatency((int)(numInVector/param->numBitInput)*ceil(param->numColMuxed/param->numColPerSynapse), ceil((double) weightMatrixRow/(double) param->numRowSubArray), 0);
 							adderTreeCM->CalculatePower((int)(numInVector/param->numBitInput)*ceil(param->numColMuxed/param->numColPerSynapse), ceil((double) weightMatrixRow/(double) param->numRowSubArray));
 							
@@ -433,7 +437,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 				}
 			}
 			*writeDynamicEnergyWU *= (arrayDupRow*arrayDupCol);
-
+			cout << "cut427" << endl;
 			// considering speedup, the latency of processing each layer is decreased
 			*readLatency = (*readLatency)/(arrayDupRow*arrayDupCol);
 			*readLatencyAG = (*readLatencyAG)/(arrayDupRow*arrayDupCol);
@@ -441,6 +445,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 			*coreLatencyAccum = (*coreLatencyAccum)/(arrayDupRow*arrayDupCol);
 			*coreLatencyOther = (*coreLatencyOther)/(arrayDupRow*arrayDupCol);
 		} else {
+			cout << "cut428" << endl;
 			// assign weight and input to specific subArray
 			vector<vector<double> > subArrayMemoryOld;
 			subArrayMemoryOld = CopySubArray(oldMemory, 0, 0, weightMatrixRow, weightMatrixCol);
@@ -473,7 +478,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 				subArray->writeDynamicEnergyArray = writeDynamicEnergyArray;
 				subArray->layerNumber = layerNumber;
 			}
-
+			cout << "cut429" << endl;
 			for (int k=0; k<numInVector; k++) {                 // calculate single subArray through the total input vectors
 				double activityRowRead = 0;
 				vector<double> input;
@@ -520,6 +525,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 			*coreLatencyOther = subArrayLatencyOther/(arrayDupRow*arrayDupCol);
 		}
 	} else {
+		cout << "cut420" << endl;
 		// weight matrix is further partitioned inside PE (among subArray) --> no duplicated
 		for (int i=0; i<numSubArrayRow/*ceil((double) weightMatrixRow/(double) param->numRowSubArray)*/; i++) {
 			for (int j=0; j<numSubArrayCol/*ceil((double) weightMatrixCol/(double) param->numColSubArray)*/; j++) {
@@ -558,7 +564,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 						subArray->writeDynamicEnergyArray = writeDynamicEnergyArray;
 						subArray->layerNumber = layerNumber;
 					}
-
+					cout << "cut421" << endl;
 					for (int k=0; k<numInVector; k++) {                 // calculate single subArray through the total input vectors
 						double activityRowRead = 0;
 						vector<double> input;
@@ -608,6 +614,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 				}
 			}
 		}
+		cout << "cut422" << endl;
 		if (NMpe) {
 			adderTreeNM->CalculateLatency((int)(numInVector/param->numBitInput)*ceil(param->numColMuxed/param->numColPerSynapse), ceil((double) weightMatrixRow/(double) param->numRowSubArray), 0);
 			adderTreeNM->CalculatePower((int)(numInVector/param->numBitInput)*ceil(param->numColMuxed/param->numColPerSynapse), ceil((double) weightMatrixRow/(double) param->numRowSubArray));
@@ -632,7 +639,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 	*readDynamicEnergyPeakFW = (*readDynamicEnergy);
 	*readLatencyPeakAG = (*readLatencyAG);
 	*readDynamicEnergyPeakAG = (*readDynamicEnergyAG);
-	
+	cout << "cut423" << endl;
 	//considering buffer activation: no matter speedup or not, the total number of data transferred is fixed
 	// input buffer: total num of data loaded in = weightMatrixRow*numInVector
 	// output buffer: total num of data transferred = weightMatrixRow*numInVector/param->numBitInput (total num of IFM in the PE) *adderTree->numAdderTree*adderTree->numAdderBit (bit precision of OFMs) 
@@ -664,6 +671,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, Technology& tech, 
 		*bufferDynamicEnergy = (bufferInputNM->readDynamicEnergy + bufferOutputNM->readDynamicEnergy)*((param->trainingEstimation)&&(layerNumber!=0)==true? 2:1);
 		*icDynamicEnergy = (busInputNM->readDynamicEnergy + busOutputNM->readDynamicEnergy)*((param->trainingEstimation)&&(layerNumber!=0)==true? 2:1);
 	} else {
+		cout << "cut424" << endl;
 		bufferInputCM->CalculateLatency(0, numInVector*ceil((double) weightMatrixRow/(double) param->numRowSubArray));
 		bufferOutputCM->CalculateLatency(0, numInVector/param->numBitInput);
 		bufferInputCM->CalculatePower(weightMatrixRow/param->numRowPerSynapse, numInVector);
